@@ -16,17 +16,16 @@ class ViewController: UIViewController {
     var contries = [String]()
     var score = 0
     var correctAnswer = 0
+    var currentQuestion = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
 //        contries.append("estonia")
 //        contries.append("france")
 //        contries.append("germany")
 //        contries.append("ireland")
 //        contries.append("italy")
 //        contries.append("monaco")
-        
         contries += ["estonia", "france", "germany", "ireland", "italy", "monaco"]
         
         button1.layer.borderWidth = 1
@@ -48,24 +47,27 @@ class ViewController: UIViewController {
         button2.setImage(UIImage (named: contries[1]), for: .normal)
         button3.setImage(UIImage (named: contries[2]), for: .normal)
         
-        title = contries[correctAnswer].uppercased()
+        title = "\(currentQuestion + 1). question: \(contries[correctAnswer].uppercased()), score: \(score)"
     }
     
     @IBAction func buttonTapped(_ sender: UIButton) {
         var title: String
         
         if sender.tag == correctAnswer {
-            title = "correct"
+            title = "correct!"
             score += 1
         } else {
-            title = "wrong"
+            title = "wrong!"
             score -= 1
         }
+        currentQuestion += 1
         
         let ac = UIAlertController(title: title, message: "Your score is \(score)", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
         
+//        if currentQuestion == 10 {
             present(ac, animated: true)
+//        }
     }
     
 }
